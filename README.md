@@ -22,8 +22,7 @@ graph TD
     
     C -->|Image / Scanned File| D[Vision Model <br/> LLaVA]
     C -->|Complex Math / Logic| E[Reasoning Model <br/> DeepSeek-R1:7b]
-    C -->|Coding / Technical| F[Technical Model <br/> Qwen2.5:7b]
-    C -->|General Chat| G[Logical Model <br/> Qwen2.5:7b]
+    C -->|Coding / Technical/General Chat| F[Technical/Logical Model <br/> Qwen2.5:7b]
     
     D --> H[Response Generation]
     E --> H
