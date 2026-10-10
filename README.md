@@ -1,5 +1,5 @@
 # SOVARA : Sovereign AI Operations & Risk Authority
-# Industrial Offline Secure AI Assistant 
+Industrial Offline Secure AI Assistant 
 
 Welcome to **SOVARA**! 
 
