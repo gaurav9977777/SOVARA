@@ -1,0 +1,13 @@
+/* Hide the Readme tab/button in the header */
+a[href*="readme"] {
+    display: none !important;
+}
+
+button[id*="readme"] {
+    display: none !important;
+}
+
+/* Also hide it based on aria-label or text content if the structure is different */
+[aria-label="Readme"] {
+    display: none !important;
+}

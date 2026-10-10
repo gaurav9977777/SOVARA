@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>SOVARA - Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #141414;
+  --pn: #1f1f1f;
+  --pn-hover: #262626;
+  --ln: #333333;
+  --cr: #E5134F;
+  --cr-hover: #ff205f;
+  --tx: #F2F2F2;
+  --mu: #9A9A9A;
+  --err: #EF4444;
+  --ok: #22C55E;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: hidden;
+  background-image: radial-gradient(circle at 50% 20%, rgba(229, 19, 79, 0.08) 0%, transparent 60%);
+}
+.bf {
+  font-family: 'Bowlby One', Impact, sans-serif;
+  font-weight: 400;
+}
+
+/* Nav */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  text-decoration: none;
+  color: var(--tx);
+}
+.nav-brand svg {
+  width: 24px;
+  height: 24px;
+}
+.nav-link {
+  font-size: 13px;
+  color: var(--mu);
+  text-decoration: none;
+  transition: color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-link:hover {
+  color: var(--tx);
+}
+
+/* Container */
+.auth-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--pn);
+  border: 1px solid var(--ln);
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+  position: relative;
+  overflow: hidden;
+}
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cr), transparent);
+}
+
+.logo-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.logo-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  animation: float 4s ease-in-out infinite alternate;
+}
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-6px); }
+}
+.logo-title {
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.logo-sub {
+  font-size: 13px;
+  color: var(--mu);
+}
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #282828;
+  border: 1px solid var(--ln);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 11px;
+  color: var(--mu);
+  margin-top: 10px;
+}
+.badge-pill i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ok);
+  display: inline-block;
+  box-shadow: 0 0 8px var(--ok);
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 20px;
+}
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mu);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.input-wrap input {
+  width: 100%;
+  background: #141414;
+  border: 1px solid var(--ln);
+  border-radius: 12px;
+  padding: 13px 16px;
+  color: var(--tx);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input-wrap input:focus {
+  border-color: var(--cr);
+  box-shadow: 0 0 0 3px rgba(229, 19, 79, 0.15);
+}
+
+/* Error message */
+.error-banner {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #FCA5A5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  margin-bottom: 20px;
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+.error-banner.show {
+  display: flex;
+}
+
+/* Buttons */
+.btn-primary {
+  width: 100%;
+  background: var(--cr);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 13px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, background-color 0.15s, box-shadow 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-primary:hover {
+  background: var(--cr-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(229, 19, 79, 0.35);
+}
+.btn-primary:active {
+  transform: scale(0.99);
+}
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--mu);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--ln);
+}
+
+.btn-secondary {
+  width: 100%;
+  background: #282828;
+  color: var(--tx);
+  border: 1px solid var(--ln);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-secondary:hover {
+  background: var(--pn-hover);
+  border-color: #555;
+}
+
+.demo-credentials {
+  margin-top: 24px;
+  background: #181818;
+  border: 1px dashed var(--ln);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 11px;
+  color: var(--mu);
+  line-height: 1.6;
+}
+.demo-credentials b {
+  color: var(--tx);
+}
+.demo-credentials code {
+  background: #252525;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #FF7A9B;
+  font-family: monospace;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 12px;
+  color: var(--mu);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Spinner */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">
+    <svg viewBox="0 0 100 100">
+      <g fill="#E5134F">
+        <ellipse cx="50" cy="26" rx="14" ry="24"/>
+        <ellipse cx="50" cy="26" rx="14" ry="24" transform="rotate(90 50 50)"/>
+        <ellipse cx="50" cy="26" rx="14" ry="24" transform="rotate(180 50 50)"/>
+        <ellipse cx="50" cy="26" rx="14" ry="24" transform="rotate(270 50 50)"/>
+      </g>
+    </svg>
+    <span class="bf">SOVARA</span>
+  </a>
+  <a href="/" class="nav-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Back to Overview
+  </a>
+</nav>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="logo-header">
+      <div class="logo-icon">
+        <svg viewBox="0 0 100 100" width="100%" height="100%">
+          <g fill="#E5134F">
+            <ellipse cx="50" cy="26" rx="14" ry="24"/>
+            <ellipse cx="50" cy="26" rx="14" ry="24" transform="rotate(90 50 50)"/>
+            <ellipse cx="50" cy="26" rx="14" ry="24" transform="rotate(180 50 50)"/>
+            <ellipse cx="50" cy="26" rx="14" ry="24" transform="rotate(270 50 50)"/>
+          </g>
+        </svg>
+      </div>
+      <h1 class="logo-title bf">SOVARA</h1>
+      <p class="logo-sub">Industrial Offline AI Assistant</p>
+      <div class="badge-pill">
+        <i></i>
+        <span>Air-Gapped &bull; 100% On-Premise</span>
+      </div>
+    </div>
+
+    <div id="errorBanner" class="error-banner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span id="errorText">Invalid credentials.</span>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label" for="username">Username</label>
+        <div class="input-wrap">
+          <input type="text" id="username" placeholder="e.g. admin" required autofocus autocomplete="username" value="admin">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password" value="admin123">
+        </div>
+      </div>
+
+      <button type="submit" id="submitBtn" class="btn-primary">
+        <span>Sign In to Vault</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </form>
+
+    <div class="divider">or</div>
+
+    <button type="button" id="guestBtn" class="btn-secondary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Continue as Guest
+    </button>
+
+    <div class="demo-credentials">
+      <b>Pre-configured logins:</b><br>
+      &bull; Admin: <code>admin</code> / <code>admin123</code> (Full access)<br>
+      &bull; Guest: <code>guest</code> (Chat only, restricted file uploads)<br>
+      <i>New usernames auto-register on first sign in!</i>
+    </div>
+  </div>
+</div>
+
+<footer>
+  SOVARA &bull; Confidential On-Premise Industrial AI &bull; No Data Leaves Server
+</footer>
+
+<script>
+(function() {
+  const loginForm = document.getElementById('loginForm');
+  const usernameInput = document.getElementById('username');
+  const passwordInput = document.getElementById('password');
+  const submitBtn = document.getElementById('submitBtn');
+  const guestBtn = document.getElementById('guestBtn');
+  const errorBanner = document.getElementById('errorBanner');
+  const errorText = document.getElementById('errorText');
+
+  function showError(msg) {
+    errorText.textContent = msg;
+    errorBanner.classList.add('show');
+  }
+
+  function hideError() {
+    errorBanner.classList.remove('show');
+  }
+
+  async function performLogin(username, password) {
+    hideError();
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<div class="spinner"></div> Authenticating...';
+
+    try {
+      const resp = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await resp.json();
+      if (!resp.ok) {
+        throw new Error(data.detail || 'Authentication failed');
+      }
+
+      // Store session
+      localStorage.setItem('sovara_token', data.token);
+      localStorage.setItem('sovara_user', JSON.stringify(data.user));
+      document.cookie = `sovara_token=${data.token}; path=/; max-age=86400; SameSite=Lax`;
+
+      // Redirect to Chat workspace
+      window.location.href = '/chat';
+    } catch (err) {
+      showError(err.message || 'Server error. Is the backend running?');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalText;
+    }
+  }
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const u = usernameInput.value.trim();
+    const p = passwordInput.value;
+    if (!u || !p) {
+      showError('Please enter both username and password.');
+      return;
+    }
+    performLogin(u, p);
+  });
+
+  guestBtn.addEventListener('click', () => {
+    performLogin('guest', 'guest');
+  });
+
+  // Check if already authenticated
+  const existingToken = localStorage.getItem('sovara_token');
+  if (existingToken) {
+    fetch('/api/auth/verify', {
+      headers: { 'Authorization': `Bearer ${existingToken}` }
+    }).then(r => {
+      if (r.ok) {
+        window.location.href = '/chat';
+      }
+    }).catch(() => {});
+  }
+})();
+</script>
+</body>
+</html>
+
