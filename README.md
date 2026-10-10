@@ -27,7 +27,6 @@ graph TD
     D --> H[Response Generation]
     E --> H
     F --> H
-    G --> H
     
     H --> I[Display on Secure Chat UI]
     H --> J[Export Option <br/> PDF / Excel]
